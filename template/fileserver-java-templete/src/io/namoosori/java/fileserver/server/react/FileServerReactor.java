@@ -33,7 +33,15 @@ public class FileServerReactor extends Thread {
 			//
 			Socket clientSocket = null;
 
-			// TODO create connection with client
+			// TODO-clear create connection with client
+			for (count = 0; count < 10; count++) {				
+				try {
+					serverSocket.accept();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 
 			(new EventRouter(clientSocket)).route();
 		}

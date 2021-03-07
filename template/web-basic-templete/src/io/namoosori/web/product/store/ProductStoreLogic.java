@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Repository;
+
 import io.namoosori.web.product.domain.Product;
 
 //Todo : Spring bean 등록을 위한 내용 추가 
+@Repository
 public class ProductStoreLogic implements ProductStore {
 	
 	private Map<String, Product> productMap;

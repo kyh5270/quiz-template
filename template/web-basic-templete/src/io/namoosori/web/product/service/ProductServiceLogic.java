@@ -2,15 +2,21 @@ package io.namoosori.web.product.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import io.namoosori.web.product.domain.Product;
 import io.namoosori.web.product.store.ProductStore;
 
-//Todo : Spring bean 등록을 위한 내용 추가 
+//Todo : Spring bean 등록을 위한 내용 추가
+@Service
 public class ProductServiceLogic implements ProductService{
 	
 	private ProductStore productStore;
 	
 //	Todo : ProductStore 필드에 대한 Spring DI 적용을 위한 생성자  추가 
+	public ProductServiceLogic(ProductStore productStore) {
+		this.productStore = productStore;
+	}
 
 	@Override
 	public void regist(Product newProduct) {

@@ -6,14 +6,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.namoosori.java.fileserver.context.FileCommand;
 import io.namoosori.java.fileserver.context.FileContext;
 import io.namoosori.java.fileserver.context.FileService;
+import io.namoosori.java.fileserver.server.repo.FileStore;
 import io.namoosori.java.fileserver.util.RequestMessage;
 import io.namoosori.java.fileserver.util.ResponseMessage;
 
@@ -48,22 +52,32 @@ public class FileServiceStub implements FileService {
 	@Override
 	public String delete(String fileName) {
 		//
-		// TODO Implement method
+		// TODO-clear Implement method
+		FileStore fileStore = FileStore.newInstance();	
+		fileStore.deleteFile(fileName);
+		
 		return null;
 	}
 
 	@Override
 	public String download(String fileName) {
 		//
-		// TODO Implement method
+		// TODO-clear Implement method
+		createFile(FileContext.CLIENT_DOWNLOAD_FOLDER, fileName);
+		
 		return null;
 	}
 
 	@Override
 	public List<String> listFiles() {
 		//
-		// TODO Implement method
-		return null;
+		// TODO-clear Implement method
+		FileStore fileStore = FileStore.newInstance();		
+		List<String> fileList = fileStore.listFiles();
+		
+		System.out.println("fileList :::::: " + fileList);
+		
+		return fileList;
 	}
 
 	@Override

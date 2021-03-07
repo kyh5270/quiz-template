@@ -54,16 +54,27 @@ public class SocketDispatcher {
 		write(message.toJson().getBytes());
 
 		String json = "";
+		System.out.println("json before ::::: " + json);
+		System.out.println("message.toString(). ::::: " + message.toString());
+		System.out.println("message.toJson().getBytes() ::::: " + message.toJson().getBytes());
+		System.out.println("message.toJson().getBytes().toString() ::::: " + message.toJson().getBytes().toString());
+		System.out.println("message.toJson().length() ::::: " + message.toJson().length());
 		// TODO
 		//  1. read message from server
-		//  2. save message to variable 'json'
+		//  2. save message to variable 'json'		
+		byte[] readMessage = read(message.toJson().getBytes().length);
+		System.out.println("readMessage ::::: " + readMessage);
+		
+		json = readMessage.toString();
 
-
+		System.out.println("json after ::::: " + json);
+		
 		return ResponseMessage.fromJson(json);
 	}
 
 	public byte[] read(int targetLen) throws IOException {
 
+		System.out.println("targetLen ::::: " + targetLen);
 		if (targetLen > MAX_READ_WRITE_LENGTH) {
 			throw new ReactFailException("Can't read more than 10MB -> " + targetLen);
 		}
@@ -73,8 +84,11 @@ public class SocketDispatcher {
 		int allReadCount = 0;
 		byte[] readBuffer = new byte[targetLen];
 
+		System.out.println("readBuffer ::::: " + readBuffer.length);
+		
 		while (allReadCount < targetLen) {
 			readCount = inputStream.read(readBuffer, allReadCount, targetLen - allReadCount);
+			System.out.println("readCount ::::: " + readCount);
 			if (readCount > 0) {
 				allReadCount += readCount;
 			} else if (readCount == -1) {
@@ -102,8 +116,13 @@ public class SocketDispatcher {
 	private Socket prepareSocket(String serverIp, int listeningPort) {
 		//
 		Socket socket = null;
-		// TODO implements socket
-
+		// TODO-clear implements socket
+		try {
+			socket = new Socket(serverIp, listeningPort);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}	
+		
 		return socket;
 	}
 }

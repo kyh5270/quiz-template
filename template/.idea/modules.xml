@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/fileserver-web-template/fileserver-web-template.iml" filepath="$PROJECT_DIR$/fileserver-web-template/fileserver-web-template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/template.iml" filepath="$PROJECT_DIR$/.idea/template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-basic-templete/web-basic-templete.iml" filepath="$PROJECT_DIR$/web-basic-templete/web-basic-templete.iml" />
+    </modules>
+  </component>
+</project>
