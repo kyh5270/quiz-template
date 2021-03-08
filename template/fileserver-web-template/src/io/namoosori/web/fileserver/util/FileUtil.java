@@ -101,6 +101,7 @@ public class FileUtil {
 		String fileSeparator = System.getProperty("file.separator");
 
 		String projectPath = context.getRealPath(fileSeparator);
+		projectPath = projectPath + "\\";
 		StringBuilder builder = new StringBuilder(projectPath);
 		builder.append("files").append(fileSeparator);
 		builder.append(folderName);
@@ -115,6 +116,7 @@ public class FileUtil {
 		try {
 			String pathName = getPathName(folderName);
 			Path path = Paths.get(pathName);
+			
 			if (!Files.exists(path)) {
 				Files.createDirectories(path);
 			} else {

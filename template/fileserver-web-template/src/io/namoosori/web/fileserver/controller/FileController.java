@@ -16,12 +16,15 @@ import lombok.RequiredArgsConstructor;
 public class FileController {
 	//
     private final FileService fileService;
-
+    
     @GetMapping("/")
     public ModelAndView main() {
         ModelAndView modelAndView = new ModelAndView("/views/main.jsp");
 
+        System.out.println("fileService.listFiles() : " + fileService.listFiles());
+        
         // TODO Implements method
+        modelAndView.addObject("fileNames", fileService.listFiles());
         
         return modelAndView;
     }
@@ -30,7 +33,10 @@ public class FileController {
     public ModelAndView findNameLike(@RequestParam String nameLike) {
         ModelAndView modelAndView = new ModelAndView("/views/main.jsp");
         
+        System.out.println("find start");
+        
         // TODO Implements method
+        modelAndView.addObject("fileNames", fileService.listFilesNameLike(nameLike));
         
         return modelAndView;
     }

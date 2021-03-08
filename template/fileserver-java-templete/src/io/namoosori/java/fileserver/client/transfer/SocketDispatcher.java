@@ -52,22 +52,19 @@ public class SocketDispatcher {
 		//
 		write(ByteUtil.toBytes(message.toJson().length()));
 		write(message.toJson().getBytes());
-
+		System.out.println(socket.getInetAddress().getHostAddress() + " 연결됨");
+		
 		String json = "";
 		System.out.println("json before ::::: " + json);
 		System.out.println("message.toString(). ::::: " + message.toString());
 		System.out.println("message.toJson().getBytes() ::::: " + message.toJson().getBytes());
 		System.out.println("message.toJson().getBytes().toString() ::::: " + message.toJson().getBytes().toString());
-		System.out.println("message.toJson().length() ::::: " + message.toJson().length());
+		System.out.println("message.toJson().getValue() ::::: " + message.getValue());
 		// TODO
 		//  1. read message from server
 		//  2. save message to variable 'json'		
-		byte[] readMessage = read(message.toJson().getBytes().length);
-		System.out.println("readMessage ::::: " + readMessage);
-		
-		json = readMessage.toString();
-
-		System.out.println("json after ::::: " + json);
+		//json = removeQuotesAndUnescape(message.getValue());
+		json = new String(read(HEADER_LENGTH),DEFAULT_CHAR_SET);
 		
 		return ResponseMessage.fromJson(json);
 	}
@@ -85,10 +82,12 @@ public class SocketDispatcher {
 		byte[] readBuffer = new byte[targetLen];
 
 		System.out.println("readBuffer ::::: " + readBuffer.length);
+		System.out.println("targetLen ::::: " + targetLen);
+		System.out.println("allReadCount ::::: " + allReadCount);
 		
 		while (allReadCount < targetLen) {
-			readCount = inputStream.read(readBuffer, allReadCount, targetLen - allReadCount);
 			System.out.println("readCount ::::: " + readCount);
+			readCount = inputStream.read(readBuffer, allReadCount, targetLen - allReadCount);
 			if (readCount > 0) {
 				allReadCount += readCount;
 			} else if (readCount == -1) {
@@ -105,7 +104,8 @@ public class SocketDispatcher {
 		if (outputStream == null || buffer == null) {
 			throw new ReactFailException("buffer is null.");
 		}
-
+		System.out.println("buffer.length ::::: " + buffer.length);
+		
 		if (buffer.length > MAX_READ_WRITE_LENGTH) {
 			throw new ReactFailException("Can't write more than 10MB -> " + buffer.length);
 		}

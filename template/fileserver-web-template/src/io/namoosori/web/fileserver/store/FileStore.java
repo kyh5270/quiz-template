@@ -18,14 +18,14 @@ public class FileStore {
 	
 	public byte[] readFile(String fileName) {
 		//
-		// TODO Implements method
-		
-		return null;
+		// TODO Implements method		
+		return this.fileUtil.read(this.fileUtil.findFile(FileContext.SERVER_REPOSITORY_FOLDER, fileName));
 	}
 
 	public void deleteFile(String fileName) {
 		//
 		// TODO Implements method
+		this.fileUtil.deleteFile(FileContext.SERVER_REPOSITORY_FOLDER, fileName);
 		
 	}
 
@@ -33,15 +33,14 @@ public class FileStore {
 		//
 		//
 		// TODO Implements method
-		
+		this.fileUtil.createFile(FileContext.SERVER_REPOSITORY_FOLDER, fileName);
 	}
 
 	public List<String> listFiles() {
 		//
 		//
 		// TODO Implements method
-		
-		return null;
+		return this.fileUtil.findFileList(FileContext.SERVER_REPOSITORY_FOLDER);
 	}
 
 }
