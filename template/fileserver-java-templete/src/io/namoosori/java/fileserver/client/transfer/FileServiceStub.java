@@ -89,9 +89,20 @@ public class FileServiceStub implements FileService {
 		long end = 0;
 		Thread task = null;
 		if(multiThreadMode) {
-			// TODO
+			// TODO-claer
 			//  1. download files on multi thread
-			//  2. set end time after all threads completed
+			//  2. set end time after all threads completed			
+			task = new Thread();
+			task.start();
+			for(String file : fileList) {				
+				try {
+					download(file);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			
+			end = System.currentTimeMillis();
 		} else {
 			for(String fileName : fileList) {
 				download(fileName);

@@ -34,6 +34,7 @@ public class FileStore {
 		//
 		// TODO Implements method
 		this.fileUtil.createFile(FileContext.SERVER_REPOSITORY_FOLDER, fileName);
+		this.fileUtil.write(fileUtil.findFile(FileContext.SERVER_REPOSITORY_FOLDER, fileName), contents);
 	}
 
 	public List<String> listFiles() {

@@ -56,15 +56,17 @@ public class SocketDispatcher {
 		
 		String json = "";
 		System.out.println("json before ::::: " + json);
-		System.out.println("message.toString(). ::::: " + message.toString());
+		System.out.println("message.toJson().length() ::::: " + message.toJson().length());
 		System.out.println("message.toJson().getBytes() ::::: " + message.toJson().getBytes());
 		System.out.println("message.toJson().getBytes().toString() ::::: " + message.toJson().getBytes().toString());
 		System.out.println("message.toJson().getValue() ::::: " + message.getValue());
 		// TODO
 		//  1. read message from server
-		//  2. save message to variable 'json'		
-		//json = removeQuotesAndUnescape(message.getValue());
-		json = new String(read(HEADER_LENGTH),DEFAULT_CHAR_SET);
+		//  2. save message to variable 'json'
+		outputStream.flush();
+		
+		json = new String(read(message.toJson().length()),DEFAULT_CHAR_SET);
+		System.out.println("json after ::::: " + json);
 		
 		return ResponseMessage.fromJson(json);
 	}

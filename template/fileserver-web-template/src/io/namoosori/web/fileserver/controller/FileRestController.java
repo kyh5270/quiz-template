@@ -54,6 +54,8 @@ public class FileRestController {
     public ResponseEntity<byte[]> download(@RequestParam("fileName") String fileName) {
         //
     	// TODO send file to client using FileService
+    	System.out.println("fileName : " + fileName);
+    	
     	byte[] output = fileService.download(fileName);    	
     	
         HttpHeaders responseHeaders = new HttpHeaders();

@@ -86,7 +86,8 @@ public class EventRouter {
 		// TODO
 		//  1. read message from server
 		//  2. save message to variable 'resultMessage'
-
+		System.out.println("TESTSTSTSTSTSTSTSTSTS");
+		
 		return resultMessage;
 	}
 
