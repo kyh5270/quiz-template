@@ -33,8 +33,6 @@ public class FileServerReactor extends Thread {
 			//
 			Socket clientSocket = null;
 
-			System.out.println("Test :::::::::::::");
-			
 			// TODO-clear create connection with client
 			for (count = 0; count < 10; count++) {				
 				try {

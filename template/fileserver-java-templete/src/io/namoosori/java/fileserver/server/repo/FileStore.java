@@ -174,7 +174,6 @@ public class FileStore {
 		FileStore store = newInstance();
 		for(int i=0; i<10; i++) {
 			String fileName = String.format("sample_%d.txt", i);
-			System.out.println("fileName :::::: " + fileName);
 			char[] content = String.format("hello world %d!", i).toCharArray();
 			try {
 				store.writeFile(fileName, content);

@@ -52,28 +52,20 @@ public class SocketDispatcher {
 		//
 		write(ByteUtil.toBytes(message.toJson().length()));
 		write(message.toJson().getBytes());
-		System.out.println(socket.getInetAddress().getHostAddress() + " 연결됨");
 		
 		String json = "";
-		System.out.println("json before ::::: " + json);
-		System.out.println("message.toJson().length() ::::: " + message.toJson().length());
-		System.out.println("message.toJson().getBytes() ::::: " + message.toJson().getBytes());
-		System.out.println("message.toJson().getBytes().toString() ::::: " + message.toJson().getBytes().toString());
-		System.out.println("message.toJson().getValue() ::::: " + message.getValue());
 		// TODO
 		//  1. read message from server
 		//  2. save message to variable 'json'
 		outputStream.flush();
 		
 		json = new String(read(message.toJson().length()),DEFAULT_CHAR_SET);
-		System.out.println("json after ::::: " + json);
 		
 		return ResponseMessage.fromJson(json);
 	}
 
 	public byte[] read(int targetLen) throws IOException {
 
-		System.out.println("targetLen ::::: " + targetLen);
 		if (targetLen > MAX_READ_WRITE_LENGTH) {
 			throw new ReactFailException("Can't read more than 10MB -> " + targetLen);
 		}
@@ -83,12 +75,7 @@ public class SocketDispatcher {
 		int allReadCount = 0;
 		byte[] readBuffer = new byte[targetLen];
 
-		System.out.println("readBuffer ::::: " + readBuffer.length);
-		System.out.println("targetLen ::::: " + targetLen);
-		System.out.println("allReadCount ::::: " + allReadCount);
-		
 		while (allReadCount < targetLen) {
-			System.out.println("readCount ::::: " + readCount);
 			readCount = inputStream.read(readBuffer, allReadCount, targetLen - allReadCount);
 			if (readCount > 0) {
 				allReadCount += readCount;
@@ -106,7 +93,6 @@ public class SocketDispatcher {
 		if (outputStream == null || buffer == null) {
 			throw new ReactFailException("buffer is null.");
 		}
-		System.out.println("buffer.length ::::: " + buffer.length);
 		
 		if (buffer.length > MAX_READ_WRITE_LENGTH) {
 			throw new ReactFailException("Can't write more than 10MB -> " + buffer.length);
