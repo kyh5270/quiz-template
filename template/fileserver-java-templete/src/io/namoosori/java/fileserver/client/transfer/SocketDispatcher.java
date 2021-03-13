@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketAddress;
+import java.nio.charset.Charset;
 
 import io.namoosori.java.fileserver.util.ByteUtil;
 import io.namoosori.java.fileserver.util.ReactFailException;
@@ -57,9 +59,8 @@ public class SocketDispatcher {
 		// TODO
 		//  1. read message from server
 		//  2. save message to variable 'json'
-		outputStream.flush();
-		
-		json = new String(read(message.toJson().length()),DEFAULT_CHAR_SET);
+		int messageLength = ByteUtil.toInt(this.read(HEADER_LENGTH));
+		json = new String(this.read(messageLength), Charset.forName(DEFAULT_CHAR_SET));
 		
 		return ResponseMessage.fromJson(json);
 	}
@@ -104,9 +105,11 @@ public class SocketDispatcher {
 	private Socket prepareSocket(String serverIp, int listeningPort) {
 		//
 		Socket socket = null;
-		// TODO-clear implements socket
+		// TODO implements socket
 		try {
 			socket = new Socket(serverIp, listeningPort);
+			SocketAddress address = socket.getRemoteSocketAddress();
+			socket.connect(address);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}	

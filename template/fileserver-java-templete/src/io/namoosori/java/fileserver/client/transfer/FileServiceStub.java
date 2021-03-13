@@ -52,30 +52,75 @@ public class FileServiceStub implements FileService {
 	@Override
 	public String delete(String fileName) {
 		//
-		// TODO-clear Implement method
-		FileStore fileStore = FileStore.newInstance();	
-		fileStore.deleteFile(fileName);
+		// TODO Implement method
+		SocketDispatcher dispatcher = getDispatcher();		
 		
-		return null;
+		String RequestMessageValue = "";
+		RequestMessage requestMessage = new RequestMessage(FileCommand.Delete.name(), RequestMessageValue);		
+		requestMessage.setRemark(fileName);
+		
+		ResponseMessage response = null;		
+		try {
+			response = dispatcher.dispatchReturn(requestMessage);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		dispatcher.close();
+		
+		return response.getValue();
 	}
 
 	@Override
 	public String download(String fileName) {
 		//
-		// TODO-clear Implement method
-		createFile(FileContext.CLIENT_DOWNLOAD_FOLDER, fileName);
+		// TODO Implement method		
+		SocketDispatcher dispatcher = getDispatcher();
 		
-		return null;
+		String RequestMessageValue = "";
+		RequestMessage requestMessage = new RequestMessage(FileCommand.Find.name(), RequestMessageValue);		
+		requestMessage.setRemark(fileName);
+		
+		ResponseMessage response = null;		
+		try {
+			response = dispatcher.dispatchReturn(requestMessage);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		dispatcher.close();
+		
+		File downFile = createFile(FileContext.CLIENT_DOWNLOAD_FOLDER, fileName);
+		char[] contents = response.getValue().toCharArray();		
+		write(downFile, contents);
+		
+		return response.getValue();
 	}
 
 	@Override
 	public List<String> listFiles() {
 		//
-		// TODO-clear Implement method
-		FileStore fileStore = FileStore.newInstance();		
-		List<String> fileList = fileStore.listFiles();
+		// TODO Implement method
+		SocketDispatcher dispatcher = getDispatcher();	
 		
-		System.out.println("fileList :::::: " + fileList);
+		String RequestMessageValue = "";
+		RequestMessage requestMessage = new RequestMessage(FileCommand.ListFiles.name(), RequestMessageValue);		
+		
+		ResponseMessage response = null;		
+		try {
+			response = dispatcher.dispatchReturn(requestMessage);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		dispatcher.close();
+		
+		String responseValue = response.getValue();
+		responseValue = responseValue.substring(1, responseValue.length()-1);		
+		List<String> fileList = Arrays.asList(responseValue.split(", "));		
 		
 		return fileList;
 	}
@@ -89,7 +134,7 @@ public class FileServiceStub implements FileService {
 		long end = 0;
 		Thread task = null;
 		if(multiThreadMode) {
-			// TODO-claer
+			// TODO
 			//  1. download files on multi thread
 			//  2. set end time after all threads completed			
 			task = new Thread();

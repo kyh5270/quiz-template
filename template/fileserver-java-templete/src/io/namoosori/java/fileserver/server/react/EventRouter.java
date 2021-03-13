@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.Charset;
 
 import io.namoosori.java.fileserver.context.FileCommand;
 import io.namoosori.java.fileserver.server.handler.FileDeleteHandler;
@@ -85,7 +86,14 @@ public class EventRouter {
 
 		// TODO
 		//  1. read message from server
-		//  2. save message to variable 'resultMessage'
+		//  2. save message to variable 'resultMessage'		
+		try {
+			int messageLength = ByteUtil.toInt(this.read(HEADER_LENGTH));
+			resultMessage = new String(this.read(messageLength), Charset.forName(DEFAULT_CHAR_SET));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return resultMessage;
 	}

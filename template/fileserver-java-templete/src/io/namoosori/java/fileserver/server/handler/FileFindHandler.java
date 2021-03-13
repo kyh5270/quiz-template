@@ -1,5 +1,7 @@
 package io.namoosori.java.fileserver.server.handler;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import io.namoosori.java.fileserver.server.repo.FileStore;
 import io.namoosori.java.fileserver.util.RequestMessage;
@@ -15,7 +17,14 @@ public class FileFindHandler implements FileHandler {
 	public ResponseMessage handle(RequestMessage request) {
 		//
 		// TODO Implement method
-		return null;
+		FileStore fileStore = getFileStore();
+		String fileName = request.getRemark();	
+		char[] contents = fileStore.readFile(fileName);		
+		
+		ResponseMessage response = null;		
+		response = new ResponseMessage(request.getServiceName(), String.valueOf(contents));
+		
+		return response;
 	}
 
 	public FileStore getFileStore() {
